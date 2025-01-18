@@ -8,6 +8,10 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    updatable_group = pygame.sprite.Group()
+    drawable_group = pygame.sprite.Group()
+
+    Player.containers = (updatable_group, drawable_group)
     player = Player(x=SCREEN_WIDTH / 2, y=SCREEN_HEIGHT / 2)
 
     print("Starting asteroids!")
@@ -22,8 +26,11 @@ def main():
 
         # fills screen with black
         screen.fill((0, 0, 0))
-        # draws the player object onto the screen
-        player.draw(screen)
+        # iterates over all updateable and drawable objects and runs their respective update
+        for member in updatable_group:
+            member.update(dt)
+        for member in drawable_group:
+            member.draw(screen)
         # refreshes the display
         pygame.display.flip()
 
