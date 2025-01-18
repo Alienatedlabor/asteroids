@@ -23,7 +23,7 @@ def main():
     Asteroid.containers = (asteroid_group, updatable_group, drawable_group)
     AsteroidField.containers = updatable_group
     field = AsteroidField()
-    Shot.containers = (updatable_group, drawable_group)
+    Shot.containers = (shot_group, updatable_group, drawable_group)
 
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -43,6 +43,10 @@ def main():
         for member in asteroid_group:
             if player.check_for_collisions(member):
                 sys.exit("Game over!")
+            for shot in shot_group:
+                if shot.check_for_collisions(member):
+                    shot.kill()
+                    member.split()
         for member in drawable_group:
             member.draw(screen)
         # refreshes the display
