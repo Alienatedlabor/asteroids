@@ -1,8 +1,10 @@
+import sys
 import pygame
 from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import *
+from circleshape import CircleShape
 
 
 def main():
@@ -35,6 +37,9 @@ def main():
         # iterates over all updateable and drawable objects and runs their respective update
         for member in updatable_group:
             member.update(dt)
+        for member in asteroid_group:
+            if player.check_for_collisions(member):
+                sys.exit("Game over!")
         for member in drawable_group:
             member.draw(screen)
         # refreshes the display
